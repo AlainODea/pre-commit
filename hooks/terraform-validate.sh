@@ -8,8 +8,9 @@ set -e
 export PATH=$PATH:/usr/local/bin
 
 for dir in $(echo "$@" | xargs -n1 dirname | sort -u | uniq); do
+  declare -r abs_dir
   pushd "$dir" >/dev/null
-  terraform init -backend=false "$dir"
-  terraform validate "$dir"
+  terraform init -backend=false
+  terraform validate
   popd >/dev/null
 done
